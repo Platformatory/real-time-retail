@@ -21,7 +21,7 @@ PAYLOAD=$(cat <<- JSON
     "shopify.store.name":"quick-start-0136bef3",
     "shopify.webhook.topics":"inventory_items/create,inventory_items/update,inventory_items/delete",
     "shopify.apisecret":"1c953f8bf6ea333f41dc938485b776a3",
-    "shopify.connector.hostname":"https://c833-2405-204-570f-ef94-70f0-f11f-f92b-d70d.ngrok-free.app"
+    "shopify.connector.hostname":"$NGROK_PUBLIC_URL"
   }
 }
 JSON

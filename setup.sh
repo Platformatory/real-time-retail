@@ -14,6 +14,8 @@ echo "Produced products data into kafka"
 
 sh ./create_datagen_source_connector.sh
 
+export NGROK_PUBLIC_URL=`curl -s localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'`
+
 sh ./create_shopify_webhook_source_connector.sh
 
 sh ./create_http_sink_connector.sh
