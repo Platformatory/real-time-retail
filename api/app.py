@@ -47,10 +47,10 @@ def dynamic_pricing():
     try:
         data = request.get_json()[0]
         print(data) 
-        if data["activity_count"]>3:
-            data["dynamic_price"] = data["price"]*1.1
+        if data["ACTIVITY_COUNT"]>3:
+            data["dynamic_price"] = float(data["PRICE"])*1.1
         else:
-            data["dynamic_price"] = data["price"]*1.01
+            data["dynamic_price"] = float(data["PRICE"])*1.01
 
         return data, 200
 

@@ -21,7 +21,7 @@ sh ./create_shopify_webhook_source_connector.sh
 
 sleep 5
 
-echo "Starting KSQL server"
+echo "Configuring KSQL queries"
 
 docker-compose exec ksqldb-server ksql http://ksqldb-server:8088 -f /home/appuser/ksql_queries.sql
 

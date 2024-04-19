@@ -42,6 +42,19 @@ CREATE OR REPLACE STREAM CLICKSTREAM_STREAM (
     ip STRING
 ) WITH (KAFKA_TOPIC='shopify_clickstream', KEY_FORMAT='KAFKA', VALUE_FORMAT='JSON');
 
+
+CREATE OR REPLACE TABLE CLICKSTREAM_ACTIVITY
+WITH (KAFKA_TOPIC='ksql_clickstream_activity', PARTITIONS=6, REPLICAS=1, KEY_FORMAT='JSON')
+AS
+SELECT 
+    product_variant_id product_variant_id,
+    COUNT(activity) activity_count
+FROM CLICKSTREAM_STREAM
+WHERE activity='contentView'
+GROUP BY product_variant_id
+EMIT CHANGES;
+
+
 CREATE OR REPLACE STREAM PRODUCT_CLICKSTREAM
 WITH (KAFKA_TOPIC='ksql_product_clickstream', PARTITIONS=6, REPLICAS=1)
 AS
@@ -57,18 +70,5 @@ SELECT p.id product_id,
     p.variant->sku variant_sku,
     p.variant->price price,
     c.product_variant_id variant_id,
-    c.activity activity,
-    c.ip ip,
-    c.time activity_time,
-    c.user_id user_id
-FROM PRODUCTS_UPDATES p INNER JOIN CLICKSTREAM_STREAM c  WITHIN 1 MINUTES ON ((p.variant->id = c.product_variant_id)) EMIT CHANGES;
-
-
-CREATE OR REPLACE TABLE PRODUCT_ACTIVITY
-WITH (KAFKA_TOPIC='ksql_product_activity', PARTITIONS=6, REPLICAS=1)
-AS
-SELECT 
-    variant_id variant_id,
-    COUNT(activity) activity_count
-FROM PRODUCT_CLICKSTREAM GROUP BY variant_id
-EMIT CHANGES;
+    c.activity_count activity_count
+FROM PRODUCTS_UPDATES p INNER JOIN CLICKSTREAM_ACTIVITY c ON ((p.variant->id = c.product_variant_id)) EMIT CHANGES;
