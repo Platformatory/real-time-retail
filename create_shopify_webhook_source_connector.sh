@@ -13,13 +13,13 @@ PAYLOAD=$(cat <<- JSON
     "topic.header":"X-Shopify-Topic",
     "topic.prefix":"plf_",
     "key.json.path": "$.id",
-    "schema.infer": true,
+    "schema.infer": false,
     "validator.class":"com.platformatory.kafka.connect.ShopifyRequestValidator",
     "port":8000,
     "shopify.access.token":"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",
     "shopify.webhook.create":true,
     "shopify.store.name":"quick-start-0136bef3",
-    "shopify.webhook.topics":"inventory_items/create,inventory_items/update,inventory_items/delete",
+    "shopify.webhook.topics":"products/update",
     "shopify.apisecret":"1c953f8bf6ea333f41dc938485b776a3",
     "shopify.connector.hostname":"$NGROK_PUBLIC_URL"
   }

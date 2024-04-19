@@ -12,6 +12,8 @@ PAYLOAD=$(cat <<- JSON
     "kafka.topic": "shopify_clickstream",
     "schema.filename": "/home/appuser/retail_clickstream_schema.avro",
     "schema.keyfield": "activity",
+    "topic.creation.default.partitions": 6,
+    "topic.creation.default.replication.factor": 1,
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable": "false"

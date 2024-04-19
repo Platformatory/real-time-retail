@@ -1,5 +1,7 @@
 from flask import Flask,request,jsonify
-from datetime import timedelta,datetime
+from datetime import timedelta,datetime,date
+from random import randrange
+import ast
 
 app = Flask(__name__)
 
@@ -40,20 +42,32 @@ def show_post(store_name):
   except Exception as e:
       return jsonify({"error": str(e)})
 
-@app.route('/events', methods=['POST'])
-def events():
+@app.route('/dynamic-pricing', methods=['POST'])
+def dynamic_pricing():
     try:
-        # Get the JSON data from the POST request
-        print(request.data)
-        #data = request.get_json()
-        #request_json = request.data.decode('utf8')#.replace("'", '"')
-        #data = json.loads(request_json)
+        data = request.get_json()[0]
+        print(data) 
+        if data["activity_count"]>3:
+            data["dynamic_price"] = data["price"]*1.1
+        else:
+            data["dynamic_price"] = data["price"]*1.01
 
-        # Pretty print the JSON data to the console
-        #print(json.dumps(data, indent=4))
+        return data, 200
 
-        # Return a response if necessary
-        return jsonify({'message': 'Data received successfully'}), 200
+    except Exception as e:
+        # Handle any exceptions
+        print(f"Error processing request: {str(e)}")
+        return jsonify({'error': 'An error occurred'}), 500
+
+@app.route('/sell-through', methods=['POST'])
+def sell_through_date():
+    try:
+        data = request.get_json()[0]
+        print(data) 
+        # date + random days (5-10)
+        data["sell_through_date"] = datetime.now() + timedelta(days=randrange(10))
+
+        return data, 200
 
     except Exception as e:
         # Handle any exceptions

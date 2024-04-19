@@ -1,7 +1,7 @@
 #!/bin/bash
 # Variables
 KAFKA_CONNECT_URL="http://localhost:8083" # Update with your Kafka Connect URL
-CONNECTOR_NAME="HTTPSinkConnector1"
+CONNECTOR_NAME="SellThroughConnnector"
 
 PAYLOAD=$(cat <<- JSON
 {
@@ -9,14 +9,15 @@ PAYLOAD=$(cat <<- JSON
   "config": {
     "connector.class": "io.confluent.connect.http.HttpSinkConnector",
     "tasks.max":1,
-    "http.api.url":"http://api:5000/events",
+    "http.api.url":"http://api:5000/sell-through",
     "headers":"Content-Type:application/json|Accept:application/json",
+    "request.body.format": "json",
     "reporter.result.topic.replication.factor":1,
     "reporter.error.topic.replication.factor":1,
     "reporter.bootstrap.servers": "broker:29092",
     "confluent.topic.bootstrap.servers": "broker:29092",
     "confluent.topic.replication.factor": "1",
-    "topics": "shopify_clickstream,shopify_products",
+    "topics": "ksql_product_clickstream",
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable": "false"
