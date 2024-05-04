@@ -16,11 +16,11 @@ PAYLOAD=$(cat <<- JSON
     "schema.infer": false,
     "validator.class":"com.platformatory.kafka.connect.ShopifyRequestValidator",
     "port":8000,
-    "shopify.access.token":"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",
+    "shopify.access.token":"$SHOPIFY_ACCESS_TOKEN",
     "shopify.webhook.create":true,
-    "shopify.store.name":"quick-start-0136bef3",
+    "shopify.store.name":"$SHOPIFY_STORE_NAME",
     "shopify.webhook.topics":"products/update",
-    "shopify.apisecret":"1c953f8bf6ea333f41dc938485b776a3",
+    "shopify.apisecret":"$SHOPIFY_API_SECRET",
     "shopify.connector.hostname":"$NGROK_PUBLIC_URL"
   }
 }

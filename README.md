@@ -7,6 +7,9 @@ ngrok http 8000
 ### In a separate terminal
 
 ```sh
+export SHOPIFY_ACCESS_TOKEN=""
+export SHOPIFY_STORE_NAME=""
+export SHOPIFY_API_SECRET=""
 ./setup.sh
 ```
 
