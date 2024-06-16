@@ -1,3 +1,7 @@
+# Real time retail
+
+Demo code from the talk on [Real Time Retail](https://youtu.be/UXuplv4MKWI) at [Bengaluru Streams April 2024](https://platformatory.io/events/2024-04-bengaluru-streams-april/).
+
 ## Setup
 
 ```sh
